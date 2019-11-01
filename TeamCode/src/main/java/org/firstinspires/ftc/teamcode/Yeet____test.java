@@ -23,6 +23,8 @@ public class Yeet____test extends SuperDrive {
             waitForStart();
             while (opModeIsActive()) {
                 mecanumDrive();
+                Steve();           //Steve is the intake
+                Grabber();
             }
         }
 
@@ -36,9 +38,9 @@ public class Yeet____test extends SuperDrive {
             double ly = -gamepad1.left_stick_y;
             double ry = -gamepad1.right_stick_y;
 
-            double d = (ly + ry) / 2;
-            double s = rt - lt;
-            double r = (ly - ry) / 2;
+           // double d = (ly + ry) / 2;
+            //double s = rt - lt;
+            //double r = (ly - ry) / 2;
 
 
             drive = -gamepad1.left_stick_y;
@@ -46,21 +48,42 @@ public class Yeet____test extends SuperDrive {
             rotate = gamepad1.right_stick_x;
 
             // You might have to play with the + or - depending on how your motors are installed
-        /*frontLeftPower = drive + strafe + rotate;
+        frontLeftPower = drive + strafe + rotate;
         backLeftPower = drive - strafe + rotate;
         frontRightPower = drive - strafe - rotate;
-        backRightPower = drive + strafe - rotate;*/
+        backRightPower = drive + strafe - rotate;
 
-            frontLeftPower = d + s + r;
+           /* frontLeftPower = d + s + r;
             backLeftPower = d - s + r;
             frontRightPower = d - s - r;
-            backRightPower = d + s - r;
+            backRightPower = d + s - r;*/
 
-            leftBack.setPower(-backLeftPower);
-            leftFront.setPower(-frontLeftPower);
+            leftBack.setPower(backLeftPower);
+            leftFront.setPower(frontLeftPower);
             rightBack.setPower(backRightPower);
             rightFront.setPower(frontRightPower);
 
         }
+
+public void Steve (){
+
+            if(gamepad1.right_bumper){
+                Steve.setPower(1);
+            }
+            else if (gamepad1.left_bumper){
+                Steve.setPower(-1);
+            }
+            else Steve.setPower(0);
+}
+
+public void Grabber (){
+
+            if(gamepad1.x){
+                Grabber.setPosition(.7);
+            }
+            else Grabber.setPosition(0);
+}
+
+
 
 }

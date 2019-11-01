@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -9,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-public class SuperDrive extends LinearOpMode {
+public abstract class SuperDrive extends Super_Sensors_Servos_Motors {
 
     public DcMotor leftBack;
     public DcMotor leftFront;
@@ -27,6 +26,8 @@ public class SuperDrive extends LinearOpMode {
     Orientation lastAngles = new Orientation();
     double globalAngle, power = .30, correction;
 
+
+
     @Override
     public void runOpMode() throws InterruptedException {
         waitForStart();
@@ -36,6 +37,8 @@ public class SuperDrive extends LinearOpMode {
     }
 
     public void initialization(boolean autonomous) {
+        super.initialization(autonomous);
+        initDrive();
 
         if (autonomous) {
             telemetry.addLine("imu init");
@@ -44,7 +47,7 @@ public class SuperDrive extends LinearOpMode {
 
             telemetry.addLine("drive Init");
             telemetry.update();
-            initDrive();
+            //initDrive(
 
 
             leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -109,11 +112,6 @@ public class SuperDrive extends LinearOpMode {
     }
 
     public void driveForwardEncoders(double distance, double power) {
-        leftBack.setPower(power);
-        leftFront.setPower(power);
-        rightBack.setPower(power);
-        rightFront.setPower(power);
-
         backlefttarget = (leftBack.getCurrentPosition() + distance);
         backrighttarget = (rightBack.getCurrentPosition() + distance);
         frontlefttarget = (leftFront.getCurrentPosition() + distance);
@@ -122,7 +120,12 @@ public class SuperDrive extends LinearOpMode {
         while (leftBack.getCurrentPosition() < backlefttarget
                 && leftFront.getCurrentPosition() < frontlefttarget
                 && rightBack.getCurrentPosition() < backrighttarget
-                && rightFront.getCurrentPosition() < backrighttarget && opModeIsActive()) {
+                && rightFront.getCurrentPosition() < frontrighttarget && opModeIsActive()) {
+
+            leftBack.setPower(power);
+            leftFront.setPower(power);
+            rightBack.setPower(power);
+            rightFront.setPower(power);
 
             telemetry.addData("left back", leftBack.getCurrentPosition());
             telemetry.addData("left front", leftFront.getCurrentPosition());
@@ -145,10 +148,10 @@ public class SuperDrive extends LinearOpMode {
         frontlefttarget = (leftFront.getCurrentPosition() - distance);
         frontrighttarget = (rightFront.getCurrentPosition() - distance);
 
-        while (leftBack.getCurrentPosition() > backrighttarget
-                && leftFront.getCurrentPosition() > backlefttarget
-                && rightBack.getCurrentPosition() > frontrighttarget
-                && rightFront.getCurrentPosition() > frontlefttarget && opModeIsActive()) {
+        while (leftBack.getCurrentPosition() > backlefttarget
+                && leftFront.getCurrentPosition() > frontlefttarget
+                && rightBack.getCurrentPosition() > backrighttarget
+                && rightFront.getCurrentPosition() > frontrighttarget && opModeIsActive()) {
             leftBack.setPower(-power);
             leftFront.setPower(-power);
             rightBack.setPower(-power);
@@ -168,21 +171,22 @@ public class SuperDrive extends LinearOpMode {
         rightFront.setPower(0);
     }
 
+
     public void driveleft(double distance, double power) {
         leftFront.setPower(-power);
         leftBack.setPower(power);
         rightFront.setPower(power);
         rightBack.setPower(-power);
 
-        backlefttarget = (leftBack.getCurrentPosition() - distance);
-        backrighttarget = (rightBack.getCurrentPosition() + distance);
-        frontlefttarget = (leftFront.getCurrentPosition() + distance);
-        frontrighttarget = (rightFront.getCurrentPosition() - distance);
+        backlefttarget = (leftBack.getCurrentPosition() + distance);   // -
+        backrighttarget = (rightBack.getCurrentPosition() - distance); // +
+        frontlefttarget = (leftFront.getCurrentPosition() - distance);// +
+        frontrighttarget = (rightFront.getCurrentPosition() + distance);// -
 
-        while (leftFront.getCurrentPosition() > backrighttarget
+        while (leftFront.getCurrentPosition() > frontlefttarget
                 && leftBack.getCurrentPosition() < backlefttarget
                 && rightFront.getCurrentPosition() < frontrighttarget
-                && rightBack.getCurrentPosition() > frontlefttarget && opModeIsActive()) {
+                && rightBack.getCurrentPosition() > backrighttarget && opModeIsActive()) {
 
             telemetry.addData("left back", leftBack.getCurrentPosition());
             telemetry.addData("left front", leftFront.getCurrentPosition());
@@ -202,22 +206,24 @@ public class SuperDrive extends LinearOpMode {
         leftFront.setPower(power);
         leftBack.setPower(-power);
         rightFront.setPower(-power);
-        rightBack.setPower(+power);
+        rightBack.setPower(power);
 
-        backlefttarget = (leftBack.getCurrentPosition() + distance);
-        backrighttarget = (rightBack.getCurrentPosition() - distance);
-        frontlefttarget = (leftFront.getCurrentPosition() - distance);
-        frontrighttarget = (rightFront.getCurrentPosition() + distance);
+        backlefttarget = (leftBack.getCurrentPosition() - distance);
+        backrighttarget = (rightBack.getCurrentPosition() + distance);
+        frontlefttarget = (leftFront.getCurrentPosition() + distance);
+        frontrighttarget = (rightFront.getCurrentPosition() - distance);
 
-        while (leftFront.getCurrentPosition() < backlefttarget
-                && leftBack.getCurrentPosition() > backrighttarget
-                && rightFront.getCurrentPosition() > frontlefttarget
-                && rightBack.getCurrentPosition() < frontrighttarget && opModeIsActive()) {
+        while (leftFront.getCurrentPosition() < frontlefttarget
+                && leftBack.getCurrentPosition() > backlefttarget
+                && rightFront.getCurrentPosition() > frontrighttarget
+                && rightBack.getCurrentPosition() < backrighttarget && opModeIsActive()) {
 
             telemetry.addData("left back", leftBack.getCurrentPosition());
             telemetry.addData("left front", leftFront.getCurrentPosition());
             telemetry.addData("right back", rightBack.getCurrentPosition());
             telemetry.addData("right front", rightFront.getCurrentPosition());
+
+
 
             telemetry.update();
         }
