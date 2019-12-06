@@ -55,12 +55,16 @@ public abstract class SuperDrive extends Super_Sensors_Servos_Motors {
             leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-            leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+           /* leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-
+*/
+            leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            
         } else {
             leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -118,9 +122,9 @@ public abstract class SuperDrive extends Super_Sensors_Servos_Motors {
         frontrighttarget = (rightFront.getCurrentPosition() + distance);
 
         while (leftBack.getCurrentPosition() < backlefttarget
-                && leftFront.getCurrentPosition() < frontlefttarget
+                /*&& leftFront.getCurrentPosition() < frontlefttarget
                 && rightBack.getCurrentPosition() < backrighttarget
-                && rightFront.getCurrentPosition() < frontrighttarget && opModeIsActive()) {
+                && rightFront.getCurrentPosition() < frontrighttarget*/ && opModeIsActive()) {
 
             leftBack.setPower(power);
             leftFront.setPower(power);
@@ -149,9 +153,9 @@ public abstract class SuperDrive extends Super_Sensors_Servos_Motors {
         frontrighttarget = (rightFront.getCurrentPosition() - distance);
 
         while (leftBack.getCurrentPosition() > backlefttarget
-                && leftFront.getCurrentPosition() > frontlefttarget
+               /* && leftFront.getCurrentPosition() > frontlefttarget
                 && rightBack.getCurrentPosition() > backrighttarget
-                && rightFront.getCurrentPosition() > frontrighttarget && opModeIsActive()) {
+                && rightFront.getCurrentPosition() > frontrighttarget*/ && opModeIsActive()) {
             leftBack.setPower(-power);
             leftFront.setPower(-power);
             rightBack.setPower(-power);
@@ -183,10 +187,10 @@ public abstract class SuperDrive extends Super_Sensors_Servos_Motors {
         frontlefttarget = (leftFront.getCurrentPosition() - distance);// +
         frontrighttarget = (rightFront.getCurrentPosition() + distance);// -
 
-        while (leftFront.getCurrentPosition() > frontlefttarget
-                && leftBack.getCurrentPosition() < backlefttarget
-                && rightFront.getCurrentPosition() < frontrighttarget
-                && rightBack.getCurrentPosition() > backrighttarget && opModeIsActive()) {
+        while (/*leftFront.getCurrentPosition() > frontlefttarget
+               &&*/ leftBack.getCurrentPosition() < backlefttarget
+               /* && rightFront.getCurrentPosition() < frontrighttarget
+                && rightBack.getCurrentPosition() > backrighttarget*/ && opModeIsActive()) {
 
             telemetry.addData("left back", leftBack.getCurrentPosition());
             telemetry.addData("left front", leftFront.getCurrentPosition());
@@ -213,10 +217,10 @@ public abstract class SuperDrive extends Super_Sensors_Servos_Motors {
         frontlefttarget = (leftFront.getCurrentPosition() + distance);
         frontrighttarget = (rightFront.getCurrentPosition() - distance);
 
-        while (leftFront.getCurrentPosition() < frontlefttarget
-                && leftBack.getCurrentPosition() > backlefttarget
-                && rightFront.getCurrentPosition() > frontrighttarget
-                && rightBack.getCurrentPosition() < backrighttarget && opModeIsActive()) {
+        while (//leftFront.getCurrentPosition() < frontlefttarget
+                /*&&*/ leftBack.getCurrentPosition() > backlefttarget
+               /* && rightFront.getCurrentPosition() > frontrighttarget
+                *//*&&*//* rightBack.getCurrentPosition() < backrighttarget*/ && opModeIsActive()) {
 
             telemetry.addData("left back", leftBack.getCurrentPosition());
             telemetry.addData("left front", leftFront.getCurrentPosition());

@@ -6,48 +6,50 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 public class Yeet____test extends SuperDrive {
 
-        double drive ;
-        double strafe;
-        double rotate;
+    double drive;
+    double strafe;
+    double rotate;
 
+    double frontLeftPower;
+    double backLeftPower;
+    double frontRightPower;
+    double backRightPower;
+    Super_Sensors_Servos_Motors sss;
 
-        double frontLeftPower;
-        double backLeftPower;
-        double frontRightPower;
-        double backRightPower;
+    @Override
+    public void runOpMode() {
 
-        @Override
-        public void runOpMode() {
+        initialization(false);
+        waitForStart();
+        while (opModeIsActive()) {
+            mecanumDrive();
+            Intake();
+            Lift();
+            Grabber();
 
-            initialization(false);
-            waitForStart();
-            while (opModeIsActive()) {
-                mecanumDrive();
-                Steve();           //Steve is the intake
-                Grabber();
-            }
         }
+    }
 
 
-        public void mecanumDrive() {
+    public void mecanumDrive() {
 
 
-            //This is setup as a tank drive with strafing on the triggers of the controller.
-            double lt = gamepad1.left_trigger;
-            double rt = gamepad1.right_trigger;
-            double ly = -gamepad1.left_stick_y;
-            double ry = -gamepad1.right_stick_y;
+        //This is setup as a tank drive with strafing on the triggers of the controller.
+        double lt = gamepad1.left_trigger;
+        double rt = gamepad1.right_trigger;
+        double ly = -gamepad1.left_stick_y;
+        double ry = -gamepad1.right_stick_y;
 
-           // double d = (ly + ry) / 2;
-            //double s = rt - lt;
-            //double r = (ly - ry) / 2;
+        // double d = (ly + ry) / 2;
+        //double s = rt - lt;
+        //double r = (ly - ry) / 2;
 
 
-            drive = -gamepad1.left_stick_y;
-            strafe = gamepad1.left_stick_x;
-            rotate = gamepad1.right_stick_x;
+        drive = -gamepad1.left_stick_y;
+        strafe = gamepad1.left_stick_x;
+        rotate = gamepad1.right_stick_x;
 
-            // You might have to play with the + or - depending on how your motors are installed
+        // You might have to play with the + or - depending on how your motors are installed
         frontLeftPower = drive + strafe + rotate;
         backLeftPower = drive - strafe + rotate;
         frontRightPower = drive - strafe - rotate;
@@ -58,32 +60,37 @@ public class Yeet____test extends SuperDrive {
             frontRightPower = d - s - r;
             backRightPower = d + s - r;*/
 
-            leftBack.setPower(backLeftPower);
-            leftFront.setPower(frontLeftPower);
-            rightBack.setPower(backRightPower);
-            rightFront.setPower(frontRightPower);
+        leftBack.setPower(backLeftPower);
+        leftFront.setPower(frontLeftPower);
+        rightBack.setPower(backRightPower);
+        rightFront.setPower(frontRightPower);
 
+    }
+
+    public void Intake() {
+
+        if (gamepad2.left_bumper) {
+            Intake.setPosition(0);
         }
 
-public void Steve (){
+        else Intake.setPosition(.7);
+    }
 
-            if(gamepad1.right_bumper){
-                Steve.setPower(1);
-            }
-            else if (gamepad1.left_bumper){
-                Steve.setPower(-1);
-            }
-            else Steve.setPower(0);
-}
-
-public void Grabber (){
-
-            if(gamepad1.x){
-                Grabber.setPosition(.7);
-            }
-            else Grabber.setPosition(0);
-}
+    public void Lift() {
+        if (gamepad2.dpad_up)
+            Lift.setPower(-1);
+        else if (gamepad2.dpad_down && DownTouch.getState()) {
+                Lift.setPower(1);
+        } else Lift.setPower(0);
 
 
+    }
 
+    public void Grabber (){
+        if (gamepad2.x){
+            Grabber.setPower(.45);
+        }
+        else Grabber.setPower(0);
+
+    }
 }
