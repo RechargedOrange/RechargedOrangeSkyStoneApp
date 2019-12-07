@@ -15,15 +15,13 @@ public class AutoMecanumStartBlue extends SuperDrive {
         waitForStart();
 
         driveright(1500,.5);
+        Grabber.setPower(1);
+        sleep(2000);
         driveBackwardEncoders(1400,.5);
-                 Grabber.setPower(1);
-                 sleep(2000);
+
         driveForwardEncoders(1400,.5);
                 Grabber.setPower(0);
         sleep(2000);
-
-
-       // }
         driveleft(2300, .3);
         sleep(300000);
     }

@@ -26,7 +26,6 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
     initGrabber();
     initIntake();
     initLift();
-    initrechargedColor();
         initDownTouch();
     }
 
@@ -51,12 +50,6 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
     public void initGrabber (){
         Grabber = hardwareMap.dcMotor.get("Grabber");
         Grabber.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-    }
-
-
-    public void initrechargedColor(){
-        rechargedColor = hardwareMap.get(ColorSensor.class, "rechargedColor");
 
     }
 

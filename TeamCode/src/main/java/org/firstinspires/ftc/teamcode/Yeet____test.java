@@ -60,10 +60,19 @@ public class Yeet____test extends SuperDrive {
             frontRightPower = d - s - r;
             backRightPower = d + s - r;*/
 
-        leftBack.setPower(backLeftPower);
-        leftFront.setPower(frontLeftPower);
-        rightBack.setPower(backRightPower);
-        rightFront.setPower(frontRightPower);
+
+           if (gamepad1.right_bumper){
+               leftBack.setPower(backLeftPower);
+               leftFront.setPower(frontLeftPower);
+               rightBack.setPower(backRightPower);
+               rightFront.setPower(frontRightPower);
+           }
+           else leftBack.setPower(backLeftPower / 2);
+                leftFront.setPower(frontLeftPower / 2);
+                rightBack.setPower(backRightPower / 2);
+                rightFront.setPower(frontRightPower / 2);
+
+
 
     }
 
