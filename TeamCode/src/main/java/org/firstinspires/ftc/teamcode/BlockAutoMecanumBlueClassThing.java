@@ -17,13 +17,21 @@ public class BlockAutoMecanumBlueClassThing extends SuperDrive {
 
             Grabber.setPower(.5);
             sleep(1000);
-        driveBackwardEncoders(1400, .5);
-        driveForwardEncoders(1400, .5);
-        Grabber.setPower(0);
+        driveBackwardEncoders(1400, .25);
+        sleep (1000);
+        driveForwardEncoders(1400, .25);
+             Grabber.setPower(-3);
             sleep(1000);
+              Grabber.setPower(0);
 
-
-        driveleft(2300, .5);
+        driveleft(1300, .5);
+        driveBackwardEncoders(150,.5);
+        driveleft(1000,.5);
         sleep(300000);
     }
 }
+
+
+
+
+/*I see you, Hacker!*/

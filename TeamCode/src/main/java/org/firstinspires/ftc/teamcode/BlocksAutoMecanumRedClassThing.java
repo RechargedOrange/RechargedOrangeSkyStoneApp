@@ -13,23 +13,20 @@ public void runOpMode (){
 
     waitForStart();
 
-  /*  driveleft(700,.3);
-    driveForwardEncoders(1000,.25);
-    Intake.setPosition(0);
-    sleep(1500);
-    Lift.setPower(1);
-    sleep(500);
-    Lift.setPower(0);
-    driveBackwardEncoders(1000,.25);*/
+
     driveright(3500,.3);
-    Grabber.setPower(1);
-    sleep(2000);
+         Grabber.setPower(1);
+            sleep(2000);
     driveBackwardEncoders(1400, .3);
-    driveForwardEncoders(1400, .3);
     sleep(2000);
+    driveForwardEncoders(1400, .3);
+      Grabber.setPower(-3);
+        sleep(2000);
        Grabber.setPower(0);
-    driveright(2300,.3);
-    sleep(300000);
+    driveright(1300,.3);
+    driveBackwardEncoders(150,.5);
+    driveright(1000,.5);
+     sleep(300000);
 
 
 }

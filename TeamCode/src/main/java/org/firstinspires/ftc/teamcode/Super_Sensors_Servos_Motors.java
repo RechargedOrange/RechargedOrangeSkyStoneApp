@@ -14,8 +14,6 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
 
     public Servo Intake;
 
-    public ColorSensor rechargedColor;
-
     public DcMotor Lift;
     public DcMotor Grabber;
 

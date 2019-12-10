@@ -23,8 +23,6 @@ public class TestClass extends SuperDrive {
             telemetry.addData("Back left Encodor", leftBack.getCurrentPosition());
             telemetry.addData("Front Left Encodor", leftFront.getCurrentPosition());
 
-            telemetry.addData("The Color Sencor", rechargedColor.blue());        // it ws 40
-
             telemetry.addData("Ze IMU", globalAngle);
 
             telemetry.update();
