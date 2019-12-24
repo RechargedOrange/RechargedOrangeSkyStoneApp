@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.PIDCoefficients;
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -22,6 +24,10 @@ public abstract class SuperDrive extends Super_Sensors_Servos_Motors {
     double frontrighttarget = 0;
     double backrighttarget = 0;
     double backlefttarget = 0;
+
+    public static double kP = 0.007;
+    public static double kI = 0.0;                              // these will be used in the PID methods
+    public static double kD = 0.0;
 
     Orientation lastAngles = new Orientation();
     double globalAngle, power = .30, correction;
@@ -115,6 +121,21 @@ public abstract class SuperDrive extends Super_Sensors_Servos_Motors {
 
     }
 
+    public void powerDriveTrain(double leftPower, double rightPower) {
+
+        double max = 1.0;
+        max = Math.max(max, Math.abs(leftPower));
+        max = Math.max(max, Math.abs(rightPower));
+        leftPower /= max;
+        rightPower /= max;
+
+        leftBack.setPower(leftPower);
+        leftFront.setPower(leftPower);
+        rightBack.setPower(rightPower);
+        rightFront.setPower(rightPower);
+
+    }
+
     public void driveForwardEncoders(double distance, double power) {
         backlefttarget = (leftBack.getCurrentPosition() + distance);
         backrighttarget = (rightBack.getCurrentPosition() + distance);
@@ -144,6 +165,30 @@ public abstract class SuperDrive extends Super_Sensors_Servos_Motors {
         rightFront.setPower(0);
     }
 
+    public void PID_driveForwardEncoders(double distance, double power, double angle) {
+
+        backlefttarget = (leftBack.getCurrentPosition() + distance);
+        backrighttarget = (rightBack.getCurrentPosition() + distance);
+        frontlefttarget = (leftFront.getCurrentPosition() + distance);              //Create a number called motorNameTarget. This will be a bigger number
+        frontrighttarget = (rightFront.getCurrentPosition() + distance);            //Than the current position of the motor, since the motor counts up as it goes forward
+
+
+        IMUstraightDouble(angle);
+
+        while (leftBack.getCurrentPosition() < backlefttarget                   //while we have not reached the target we just set, keep running
+                && leftFront.getCurrentPosition() < frontlefttarget
+                && rightBack.getCurrentPosition() < backrighttarget
+                && rightFront.getCurrentPosition() < frontrighttarget && opModeIsActive()) {
+
+            double turn = IMUstraightDouble(angle);
+            powerDriveTrain((power + turn), (power - turn));
+            telemetry.update();
+        }
+
+
+        DriveOff();
+    }
+
 
     public void driveBackwardEncoders(double distance, double power) {
 
@@ -169,12 +214,31 @@ public abstract class SuperDrive extends Super_Sensors_Servos_Motors {
             telemetry.update();
 
         }
-        leftBack.setPower(0);
-        leftFront.setPower(0);
-        rightBack.setPower(0);
-        rightFront.setPower(0);
+        DriveOff();
     }
 
+    public void PID_driveBackwardEncoders(double distance, double power, double angle) {
+        backlefttarget = (leftBack.getCurrentPosition() - distance);
+        backrighttarget = (rightBack.getCurrentPosition() - distance);
+        frontlefttarget = (leftFront.getCurrentPosition() - distance);              //Create a number called motorNameTarget. This will be a bigger number
+        frontrighttarget = (rightFront.getCurrentPosition() - distance);            //Than the current position of the motor, since the motor counts up as it goes forward
+
+
+        IMUstraightDouble(angle);
+
+        while (leftBack.getCurrentPosition() >  backlefttarget                   //while we have not reached the target we just set, keep running
+                && leftFront.getCurrentPosition() > frontlefttarget
+                && rightBack.getCurrentPosition() > backrighttarget
+                && rightFront.getCurrentPosition() > frontrighttarget && opModeIsActive()) {
+
+            double turn = IMUstraightDouble(angle);
+            powerDriveTrain((-power + turn), (-power - turn));
+            telemetry.update();
+        }
+
+
+        DriveOff();
+    }
 
     public void driveleft(double distance, double power) {
         leftFront.setPower(-power);
@@ -182,10 +246,10 @@ public abstract class SuperDrive extends Super_Sensors_Servos_Motors {
         rightFront.setPower(power);
         rightBack.setPower(-power);
 
-        backlefttarget = (leftBack.getCurrentPosition() + distance);   // -
-        backrighttarget = (rightBack.getCurrentPosition() - distance); // +
-        frontlefttarget = (leftFront.getCurrentPosition() - distance);// +
-        frontrighttarget = (rightFront.getCurrentPosition() + distance);// -
+        backlefttarget = (leftBack.getCurrentPosition() + distance);
+        backrighttarget = (rightBack.getCurrentPosition() - distance);
+        frontlefttarget = (leftFront.getCurrentPosition() - distance);
+        frontrighttarget = (rightFront.getCurrentPosition() + distance);
 
         while (/*leftFront.getCurrentPosition() > frontlefttarget
                &&*/ leftBack.getCurrentPosition() < backlefttarget
@@ -272,6 +336,8 @@ public abstract class SuperDrive extends Super_Sensors_Servos_Motors {
         rightFront.setPower(0);
     }
 
+//______________________________________PID stuff___________________________________________________
+
 
     public void resetAngle() {
         lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -295,4 +361,35 @@ public abstract class SuperDrive extends Super_Sensors_Servos_Motors {
 
         return globalAngle;
     }
+
+    PIDController pid = new PIDController(new PIDCoefficients(kP, kI, kD));
+
+
+    public double IMUstraightDouble(double targetAngle) {
+
+        double currentAngle = getAngle();
+
+        return pid.update(currentAngle - targetAngle);
+    }
+
+public void DriveOff(){
+
+        leftBack.setPower(0);
+        leftFront.setPower(0);
+        rightBack.setPower(0);
+        rightFront.setPower(0);
+}
+
+    public void pidTurn(double angle){
+        pidTurn(angle, 2.0);
+    }
+    public void pidTurn(double angle, double threshold){
+        IMUstraightDouble(angle);
+        while(Math.abs(angle - getAngle()) > threshold && opModeIsActive()){
+            double turn = IMUstraightDouble(angle);
+            powerDriveTrain(turn, -turn);
+        }
+    }
+
+
 }

@@ -23,7 +23,9 @@ public class Yeet____test extends SuperDrive {
         waitForStart();
         while (opModeIsActive()) {
             mecanumDrive();
-            Intake();
+            CollectRight();
+            CollectLeft();
+            CollectBack();
             Lift();
             Grabber();
 
@@ -76,14 +78,35 @@ public class Yeet____test extends SuperDrive {
 
     }
 
-    public void Intake() {
+    public void CollectRight (){
+        if (gamepad2.right_bumper)
+            CollectRight.setPower(1);
+        else if (gamepad2.left_bumper)
+            CollectRight.setPower(-1);
+        else CollectRight.setPower(0);
 
-        if (gamepad2.left_bumper) {
-            Intake.setPosition(0);
-        }
-
-        else Intake.setPosition(.7);
     }
+
+    public void CollectLeft (){
+        if (gamepad2.right_bumper)
+            CollectLeft.setPower(-1);
+        else if (gamepad2.left_bumper)
+            CollectLeft.setPower(1);
+        else CollectLeft.setPower(0);
+
+    }
+
+
+    public void CollectBack (){
+        if (gamepad2.left_trigger > .5)
+            CollectBack.setPosition(1);
+        else if (gamepad2.right_trigger > .5)
+            CollectBack.setPosition(.5);
+        else CollectBack.setPosition(0);
+
+    }
+
+
 
     public void Lift() {
         if (gamepad2.dpad_up)
