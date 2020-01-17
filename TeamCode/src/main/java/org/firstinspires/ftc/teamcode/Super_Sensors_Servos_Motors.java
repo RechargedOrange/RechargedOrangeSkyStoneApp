@@ -20,10 +20,13 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
 
     public CRServo CollectRight;
     public CRServo CollectLeft;
+
     public Servo CollectBack;
+    public Servo FoundRight;
+    public Servo FoundLeft;
 
     public DcMotor Lift;
-    public DcMotor Grabber;
+    public DcMotor CollectLift;
 
     DigitalChannel DownTouch;
 
@@ -36,12 +39,14 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
 
 
     public void initialization(boolean autonomous) {
-    initGrabber();
     initLift();
     initCollectLeft();
     initCollectRight();
     initCollectBack();
         initDownTouch();
+        initFoundRight();
+        initFoundLeft();
+        initCollectLift();
     }
 
     //                                      Servos
@@ -59,6 +64,10 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
         CollectBack = hardwareMap.servo.get("CollectBack");
     }
 
+    public void initFoundRight () {FoundRight = hardwareMap.servo.get("FoundRight");}
+
+    public void initFoundLeft () {FoundLeft = hardwareMap.servo.get("FoundLeft");}
+
     //----------------------------------------------------------------------------------
 
     //                                  Motors
@@ -69,9 +78,9 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
 
     }
 
-    public void initGrabber (){
-        Grabber = hardwareMap.dcMotor.get("Grabber");
-        Grabber.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    public void initCollectLift (){
+        CollectLift = hardwareMap.dcMotor.get("CollectLift");
+        CollectLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     }
 

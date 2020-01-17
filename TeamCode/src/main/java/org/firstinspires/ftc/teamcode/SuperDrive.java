@@ -4,6 +4,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -31,6 +32,7 @@ public abstract class SuperDrive extends Super_Sensors_Servos_Motors {
 
     Orientation lastAngles = new Orientation();
     double globalAngle, power = .30, correction;
+    public ElapsedTime waitTimer = new ElapsedTime();
 
 
 

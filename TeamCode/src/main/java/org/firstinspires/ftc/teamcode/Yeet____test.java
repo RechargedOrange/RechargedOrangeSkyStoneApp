@@ -27,7 +27,10 @@ public class Yeet____test extends SuperDrive {
             CollectLeft();
             CollectBack();
             Lift();
-            Grabber();
+            FoundLeft();
+            FoundRight();
+            CollectLift();
+
 
         }
     }
@@ -79,18 +82,18 @@ public class Yeet____test extends SuperDrive {
     }
 
     public void CollectRight (){
-        if (gamepad2.right_bumper)
+        if (gamepad2.left_bumper)
             CollectRight.setPower(1);
-        else if (gamepad2.left_bumper)
+        else if (gamepad2.right_bumper)
             CollectRight.setPower(-1);
         else CollectRight.setPower(0);
 
     }
 
     public void CollectLeft (){
-        if (gamepad2.right_bumper)
+        if (gamepad2.left_bumper)
             CollectLeft.setPower(-1);
-        else if (gamepad2.left_bumper)
+        else if (gamepad2.right_bumper)
             CollectLeft.setPower(1);
         else CollectLeft.setPower(0);
 
@@ -99,14 +102,12 @@ public class Yeet____test extends SuperDrive {
 
     public void CollectBack (){
         if (gamepad2.left_trigger > .5)
-            CollectBack.setPosition(1);
+            CollectBack.setPosition(.35);
         else if (gamepad2.right_trigger > .5)
-            CollectBack.setPosition(.5);
+            CollectBack.setPosition(1);
         else CollectBack.setPosition(0);
 
     }
-
-
 
     public void Lift() {
         if (gamepad2.dpad_up)
@@ -118,11 +119,29 @@ public class Yeet____test extends SuperDrive {
 
     }
 
-    public void Grabber (){
-        if (gamepad2.x){
-            Grabber.setPower(.45);
-        }
-        else Grabber.setPower(0);
+
+    public void FoundLeft (){
+        if (gamepad1.left_bumper)
+            FoundLeft.setPosition(0);
+        else FoundLeft.setPosition(1);
 
     }
+
+    public void FoundRight () {
+        if (gamepad1.left_bumper)
+            FoundRight.setPosition(0);
+        else FoundRight.setPosition(1);
+
+    }
+
+    public void CollectLift (){
+        if (gamepad2.dpad_down)
+            CollectLift.setPower(.85);
+        else if (gamepad2.dpad_up)
+            CollectLift.setPower(-.85);
+        else CollectLift.setPower(0);
+    }
+
+
+
 }

@@ -13,7 +13,12 @@ public class DrivePark_AutoRedBlocks extends SuperDrive {
 
         waitForStart();
 
-        driveright(500,.6);
+        waitTimer.reset();
+
+        while (waitTimer.seconds() < postDeployWait){idle(); }{
+        }
+
+        driveright(700,.6);
         driveBackwardEncoders(700,.4);
 
 
