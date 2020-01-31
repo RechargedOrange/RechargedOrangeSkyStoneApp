@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -14,6 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 
 public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
 
@@ -29,11 +31,14 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
     public DcMotor CollectLift;
 
     DigitalChannel DownTouch;
+    DigitalChannel UpTouch;
 
     double postDeployWait;
     boolean lastButtonState = false;
     Orientation lastAngles = new Orientation();
     double globalAngle, turnPower = .30, correction;
+    public ElapsedTime waitTimer = new ElapsedTime();
+  //  MasterVision vision;
 
     public BNO055IMU imu;
 
@@ -47,6 +52,7 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
         initFoundRight();
         initFoundLeft();
         initCollectLift();
+        initUpTouch();
     }
 
     //                                      Servos
@@ -92,6 +98,23 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
         DownTouch.setMode(DigitalChannel.Mode.INPUT);
     }
 
+    public void initUpTouch(){
+        UpTouch = hardwareMap.get(DigitalChannel.class, "UpTouch");
+
+        // set the digital channel to input.
+        UpTouch.setMode(DigitalChannel.Mode.INPUT);
+
+
+    }
+
+    //________________________________Scan 4 Skystones stuff_____________________________
+
+
+
+
+
+
+
     public void waitTime() {
         telemetry.addData("Wait time seconds", postDeployWait);
         telemetry.addLine("x to increment 1.0 seconds");
@@ -129,7 +152,10 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
     @Override
     public void waitForStart(){
         while(!(isStarted() || isStopRequested())){
-            telemetry.addLine("ready to go!");
+
+            waitTime();
+
+           // telemetry.addLine("ready to go!");
             telemetry.update();
         }
     }

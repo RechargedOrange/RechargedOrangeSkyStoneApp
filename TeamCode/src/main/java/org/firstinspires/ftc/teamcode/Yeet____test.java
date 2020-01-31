@@ -67,11 +67,19 @@ public class Yeet____test extends SuperDrive {
 
 
            if (gamepad1.right_bumper){
+               leftBack.setPower(backLeftPower / 4);
+               leftFront.setPower(frontLeftPower / 4);
+               rightBack.setPower(backRightPower / 4);
+               rightFront.setPower(frontRightPower / 4);
+           }
+
+           else if (gamepad1.left_bumper){
                leftBack.setPower(backLeftPower);
                leftFront.setPower(frontLeftPower);
                rightBack.setPower(backRightPower);
                rightFront.setPower(frontRightPower);
            }
+
            else leftBack.setPower(backLeftPower / 2);
                 leftFront.setPower(frontLeftPower / 2);
                 rightBack.setPower(backRightPower / 2);
@@ -83,18 +91,18 @@ public class Yeet____test extends SuperDrive {
 
     public void CollectRight (){
         if (gamepad2.left_bumper)
-            CollectRight.setPower(1);
-        else if (gamepad2.right_bumper)
             CollectRight.setPower(-1);
+        else if (gamepad2.right_bumper)
+            CollectRight.setPower(1);
         else CollectRight.setPower(0);
 
     }
 
     public void CollectLeft (){
         if (gamepad2.left_bumper)
-            CollectLeft.setPower(-1);
-        else if (gamepad2.right_bumper)
             CollectLeft.setPower(1);
+        else if (gamepad2.right_bumper)
+            CollectLeft.setPower(-1);
         else CollectLeft.setPower(0);
 
     }
@@ -105,30 +113,30 @@ public class Yeet____test extends SuperDrive {
             CollectBack.setPosition(.35);
         else if (gamepad2.right_trigger > .5)
             CollectBack.setPosition(1);
-        else CollectBack.setPosition(0);
+        else CollectBack.setPosition(.10);
 
     }
 
     public void Lift() {
-        if (gamepad2.dpad_up)
+        if (gamepad2.dpad_up && UpTouch.getState())
             Lift.setPower(-1);
-        else if (gamepad2.dpad_down && DownTouch.getState()) {
+        else if (gamepad2.dpad_down) {
                 Lift.setPower(1);
         } else Lift.setPower(0);
-
 
     }
 
 
+
     public void FoundLeft (){
-        if (gamepad1.left_bumper)
+        if (gamepad1.x)
             FoundLeft.setPosition(0);
         else FoundLeft.setPosition(1);
 
     }
 
     public void FoundRight () {
-        if (gamepad1.left_bumper)
+        if (gamepad1.x)
             FoundRight.setPosition(0);
         else FoundRight.setPosition(1);
 

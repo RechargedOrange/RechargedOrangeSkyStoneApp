@@ -32,7 +32,6 @@ public abstract class SuperDrive extends Super_Sensors_Servos_Motors {
 
     Orientation lastAngles = new Orientation();
     double globalAngle, power = .30, correction;
-    public ElapsedTime waitTimer = new ElapsedTime();
 
 
 

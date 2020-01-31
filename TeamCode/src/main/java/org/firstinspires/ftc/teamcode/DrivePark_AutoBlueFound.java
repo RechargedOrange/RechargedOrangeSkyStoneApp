@@ -21,8 +21,9 @@ public class DrivePark_AutoBlueFound extends SuperDrive {
         {
         }
 
-        driveleft(500, .6);
-        driveBackwardEncoders(700, .4);
+        sleep(25000);
+        driveleft(200, .6);
+       // driveBackwardEncoders(700, .4);
 
     }
 }

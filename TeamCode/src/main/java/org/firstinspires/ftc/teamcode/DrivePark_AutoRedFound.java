@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous (name = "Drive&Park Auto Red Blocks Blue Found")
+@Autonomous (name = "Drive&Park Auto Red Found blue blocks")
 
-public class DrivePark_AutoRedBlocks extends SuperDrive {
+public class DrivePark_AutoRedFound extends SuperDrive {
 
 
     public void runOpMode (){
