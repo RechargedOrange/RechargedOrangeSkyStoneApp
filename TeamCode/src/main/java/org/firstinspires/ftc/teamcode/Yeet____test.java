@@ -22,7 +22,7 @@ public class Yeet____test extends SuperDrive {
         initialization(false);
         waitForStart();
         while (opModeIsActive()) {
-            mecanumDrive();  //how to do stuff
+            mecanumDrive();  //how to do stuff 2
             CollectRight();
             CollectLeft();
             CollectBack();
