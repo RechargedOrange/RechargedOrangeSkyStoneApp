@@ -26,6 +26,7 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
     public Servo CollectBack;
     public Servo FoundRight;
     public Servo FoundLeft;
+    public Servo CapMec;
 
     public DcMotor Lift;
     public DcMotor CollectLift;
@@ -53,6 +54,7 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
         initFoundLeft();
         initCollectLift();
         initUpTouch();
+        initCapMec();
     }
 
     //                                      Servos
@@ -73,6 +75,8 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
     public void initFoundRight () {FoundRight = hardwareMap.servo.get("FoundRight");}
 
     public void initFoundLeft () {FoundLeft = hardwareMap.servo.get("FoundLeft");}
+
+    public void initCapMec () {CapMec = hardwareMap.servo.get("CapMec");}
 
     //----------------------------------------------------------------------------------
 

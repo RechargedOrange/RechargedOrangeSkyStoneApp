@@ -47,10 +47,11 @@ public class AutoBlueFound extends SuperDrive {
                 FoundLeft.setPosition(1);
                 FoundRight.setPosition(1);
         CollectBack.setPosition(.35);
-                PID_driveForwardEncoders(800, .5,0);
+        pidTurn(90);
+                PID_driveForwardEncoders(800, .5,90);
 
         driveleft(800,.3);
-        PID_driveForwardEncoders(1000,.3,0);
+        PID_driveForwardEncoders(1000,.3,90);
 
         sleep(300000);
 

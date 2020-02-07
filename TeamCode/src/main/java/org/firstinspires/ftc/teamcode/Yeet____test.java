@@ -22,7 +22,7 @@ public class Yeet____test extends SuperDrive {
         initialization(false);
         waitForStart();
         while (opModeIsActive()) {
-            mecanumDrive();  //how to do stuff 2
+            mecanumDrive();
             CollectRight();
             CollectLeft();
             CollectBack();
@@ -30,6 +30,7 @@ public class Yeet____test extends SuperDrive {
             FoundLeft();
             FoundRight();
             CollectLift();
+            CapMec();
 
 
         }
@@ -126,19 +127,27 @@ public class Yeet____test extends SuperDrive {
 
     }
 
+    public void CapMec(){
+        if(gamepad2.left_stick_button)
+            CapMec.setPosition(1);
+        else CapMec.setPosition(0);
+
+
+    }
+
 
 
     public void FoundLeft (){
         if (gamepad1.x)
-            FoundLeft.setPosition(0);
-        else FoundLeft.setPosition(1);
+            FoundLeft.setPosition(.5);
+        else FoundLeft.setPosition(0);
 
     }
 
     public void FoundRight () {
         if (gamepad1.x)
-            FoundRight.setPosition(0);
-        else FoundRight.setPosition(1);
+            FoundRight.setPosition(1);
+        else FoundRight.setPosition(0);
 
     }
 

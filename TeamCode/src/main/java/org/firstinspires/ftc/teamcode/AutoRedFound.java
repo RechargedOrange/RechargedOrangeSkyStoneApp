@@ -54,9 +54,10 @@ public class AutoRedFound extends SuperDrive {
               FoundLeft.setPosition(1);
               FoundRight.setPosition(1);
         CollectBack.setPosition(.35);
-              PID_driveForwardEncoders(800,.3,0);
+        pidTurn(90);
+              PID_driveForwardEncoders(800,.3,90);
         driveright(800,.3);
-        PID_driveForwardEncoders(1000,1,0);
+        PID_driveForwardEncoders(1000,1,90);
         // rotateRight(90,.3);
         sleep(300000);
 
