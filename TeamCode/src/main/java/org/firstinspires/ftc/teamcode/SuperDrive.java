@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
+@Config
 public abstract class SuperDrive extends Super_Sensors_Servos_Motors {
 
     public DcMotor leftBack;
@@ -26,7 +28,7 @@ public abstract class SuperDrive extends Super_Sensors_Servos_Motors {
     double backrighttarget = 0;
     double backlefttarget = 0;
 
-    public static double kP = 0.007;
+    public static double kP = 0.05;
     public static double kI = 0.0;                              // these will be used in the PID methods
     public static double kD = 0.0;
 
@@ -369,7 +371,7 @@ public abstract class SuperDrive extends Super_Sensors_Servos_Motors {
     public double IMUstraightDouble(double targetAngle) {
 
         double currentAngle = getAngle();
-
+        pid.setCoeffs(new PIDCoefficients(kP, kI, kD));
         return pid.update(currentAngle - targetAngle);
     }
 
@@ -386,7 +388,8 @@ public void DriveOff(){
     }
     public void pidTurn(double angle, double threshold){
         IMUstraightDouble(angle);
-        while(Math.abs(angle - getAngle()) > threshold && opModeIsActive()){
+        ElapsedTime timer = new ElapsedTime();
+        while(timer.seconds() < 3.0 /*Math.abs(angle - getAngle()) > threshold && opModeIsActive()*/){
             double turn = IMUstraightDouble(angle);
             powerDriveTrain(turn, -turn);
         }

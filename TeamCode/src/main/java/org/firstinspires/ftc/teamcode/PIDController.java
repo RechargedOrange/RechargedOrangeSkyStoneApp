@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
 
 public class PIDController {
-    private final PIDCoefficients pidCoefficients;
+    private PIDCoefficients pidCoefficients;
 
     private double integral = 0.0;
     private long lastTime = 0;
@@ -17,6 +17,10 @@ public class PIDController {
         lastTime = currTime;
         lastError = error;
         return error * pidCoefficients.p + integral * pidCoefficients.i + derivative * pidCoefficients.d;
+    }
+
+    public void setCoeffs(PIDCoefficients pidCoefficients){
+        this.pidCoefficients = pidCoefficients;
     }
 
     public PIDController(PIDCoefficients pidCoefficients) {

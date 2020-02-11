@@ -68,42 +68,43 @@ public class Yeet____test extends SuperDrive {
 
 
            if (gamepad1.right_bumper){
-               leftBack.setPower(backLeftPower / 4);
-               leftFront.setPower(frontLeftPower / 4);
-               rightBack.setPower(backRightPower / 4);
-               rightFront.setPower(frontRightPower / 4);
+               leftBack.setPower(backLeftPower / 2);
+               leftFront.setPower(frontLeftPower / 2);
+               rightBack.setPower(backRightPower / 2);
+               rightFront.setPower(frontRightPower / 2);
            }
 
-           else if (gamepad1.left_bumper){
-               leftBack.setPower(backLeftPower);
-               leftFront.setPower(frontLeftPower);
-               rightBack.setPower(backRightPower);
-               rightFront.setPower(frontRightPower);
+
+           else if (gamepad1.left_bumper) {
+               leftBack.setPower(backLeftPower / 2);
+               leftFront.setPower(frontLeftPower / 2);
+               rightBack.setPower(backRightPower / 2);
+               rightFront.setPower(frontRightPower / 2);
            }
 
-           else leftBack.setPower(backLeftPower / 2);
-                leftFront.setPower(frontLeftPower / 2);
-                rightBack.setPower(backRightPower / 2);
-                rightFront.setPower(frontRightPower / 2);
 
+        else  leftBack.setPower(backLeftPower);
+        leftFront.setPower(frontLeftPower);
+        rightBack.setPower(backRightPower);
+        rightFront.setPower(frontRightPower);
 
 
     }
 
     public void CollectRight (){
         if (gamepad2.left_bumper)
-            CollectRight.setPower(-1);
-        else if (gamepad2.right_bumper)
             CollectRight.setPower(1);
+        else if (gamepad2.right_bumper)
+            CollectRight.setPower(-1);
         else CollectRight.setPower(0);
 
     }
 
     public void CollectLeft (){
         if (gamepad2.left_bumper)
-            CollectLeft.setPower(1);
-        else if (gamepad2.right_bumper)
             CollectLeft.setPower(-1);
+        else if (gamepad2.right_bumper)
+            CollectLeft.setPower(1);
         else CollectLeft.setPower(0);
 
     }
@@ -119,19 +120,18 @@ public class Yeet____test extends SuperDrive {
     }
 
     public void Lift() {
-        if (gamepad2.dpad_up && UpTouch.getState())
-            Lift.setPower(-1);
-        else if (gamepad2.dpad_down) {
-                Lift.setPower(1);
+        if (gamepad2.dpad_up )
+            Lift.setPower(1);
+        else if (gamepad2.dpad_down && UpTouch.getState()) {
+                Lift.setPower(-1);
         } else Lift.setPower(0);
 
     }
 
     public void CapMec(){
-        if(gamepad2.left_stick_button)
+        if(gamepad2.y)
             CapMec.setPosition(1);
         else CapMec.setPosition(0);
-
 
     }
 
@@ -139,15 +139,15 @@ public class Yeet____test extends SuperDrive {
 
     public void FoundLeft (){
         if (gamepad1.x)
-            FoundLeft.setPosition(.5);
+            FoundLeft.setPosition(.4);
         else FoundLeft.setPosition(0);
 
     }
 
     public void FoundRight () {
         if (gamepad1.x)
-            FoundRight.setPosition(1);
-        else FoundRight.setPosition(0);
+            FoundRight.setPosition(0);
+        else FoundRight.setPosition(.4);
 
     }
 
