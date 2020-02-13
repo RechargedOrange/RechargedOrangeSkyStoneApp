@@ -38,15 +38,16 @@ public class AutoBlueFound extends SuperDrive {
         driveright(1300,.5);
             sleep(2000);
             //pidTurn(0);
-        PID_driveBackwardEncoders(1400,.35,0);
-             FoundLeft.setPosition(0); FoundRight.setPosition(0);
+        PID_driveBackwardEncoders(1570,.35,0);
+             FoundLeft.setPosition(.4); FoundRight.setPosition(0);
         sleep(2000);
         PID_driveForwardEncoders(1400,.3,0);
              pidTurn(90);
-                FoundLeft.setPosition(.4);
-                FoundRight.setPosition(0);
+                FoundLeft.setPosition(0);
+                FoundRight.setPosition(.4);
         CollectBack.setPosition(.35);
-                PID_driveForwardEncoders(800, .3,90);
+                PID_driveForwardEncoders(1000, .3,90);
+                //_______________Part where we get the block_____
         /*        pidTurn(0);
         CollectLeft.setPower(-1);
         CollectRight.setPower(1);

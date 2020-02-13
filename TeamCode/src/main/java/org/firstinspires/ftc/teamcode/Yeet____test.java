@@ -112,10 +112,10 @@ public class Yeet____test extends SuperDrive {
 
     public void CollectBack (){
         if (gamepad2.left_trigger > .5)
-            CollectBack.setPosition(.35);
+            CollectBack.setPosition(0);
         else if (gamepad2.right_trigger > .5)
-            CollectBack.setPosition(1);
-        else CollectBack.setPosition(.10);
+            CollectBack.setPosition(.35);
+        else CollectBack.setPosition(1);
 
     }
 
@@ -138,14 +138,14 @@ public class Yeet____test extends SuperDrive {
 
 
     public void FoundLeft (){
-        if (gamepad1.x)
+        if (gamepad1.right_bumper)
             FoundLeft.setPosition(.4);
         else FoundLeft.setPosition(0);
 
     }
 
     public void FoundRight () {
-        if (gamepad1.x)
+        if (gamepad1.right_bumper)
             FoundRight.setPosition(0);
         else FoundRight.setPosition(.4);
 

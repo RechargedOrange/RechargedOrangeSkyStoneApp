@@ -37,7 +37,7 @@ public class AutoBlueBlocks extends SuperDrive {
 // driveright(3500, .5);
 
 
-        PID_driveBackwardEncoders(100,.4,0);
+        /*PID_driveBackwardEncoders(100,.4,0);
         CollectLeft.setPower(-1);
         CollectRight.setPower(1);
         CollectBack.setPosition(1);
@@ -45,20 +45,22 @@ public class AutoBlueBlocks extends SuperDrive {
             pidTurn(90);
        PID_driveForwardEncoders(700,.3,90);
         PID_driveBackwardEncoders(700,.3,90);
-             pidTurn(0);
-        PID_driveForwardEncoders(1500,.5,0);
-             //________________________________________________________________________________________
+        driveright(1500,.3);*/
+
+
+       // PID_driveForwardEncoders(1500,.5,90);
+        //________________________________________________________________________________________
+        PID_driveBackwardEncoders(100,.8,0);
         driveright(3500,.3);
+
             sleep(2000);
-        PID_driveBackwardEncoders(1400, .3,0);
-             FoundLeft.setPosition(0);FoundRight.setPosition(0);
+        PID_driveBackwardEncoders(1570, .3,0);
+             FoundLeft.setPosition(.4);FoundRight.setPosition(0);
         sleep(2000);
              pidTurn(90);
        PID_driveForwardEncoders(1400, .3,90);
-                FoundLeft.setPosition(1);
-             FoundRight.setPosition(1);
-        PID_driveForwardEncoders(800,.3,90);
-        driveleft(800,.3);
+                FoundLeft.setPosition(0);
+             FoundRight.setPosition(.4);
         PID_driveForwardEncoders(1000,.5,90);
 
              sleep(300000);}
