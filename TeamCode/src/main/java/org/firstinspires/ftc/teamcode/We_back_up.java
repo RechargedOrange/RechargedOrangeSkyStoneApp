@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous (name = "Drive&Park Auto Red Found blue blocks")
+@Autonomous (name = "This Auto backs Up")
 
-public class DrivePark_AutoRedFound extends SuperDrive {
+public class We_back_up extends SuperDrive {
 
 
     public void runOpMode (){
@@ -18,8 +18,8 @@ public class DrivePark_AutoRedFound extends SuperDrive {
         while (waitTimer.seconds() < postDeployWait){idle(); }{
         }
 
-        driveright(700,.6);
-        driveBackwardEncoders(700,.4);
+        PID_driveBackwardEncoders(300,.7,0);
+        sleep(3000000);
 
 
     }

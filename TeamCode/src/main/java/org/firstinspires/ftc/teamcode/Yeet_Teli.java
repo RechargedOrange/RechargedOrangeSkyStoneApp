@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp (name = "Yeet___test")
+@TeleOp (name = "Yeet_Teli")
 
-public class Yeet____test extends SuperDrive {
+public class Yeet_Teli extends SuperDrive {
 
     double drive;
     double strafe;
@@ -14,6 +14,12 @@ public class Yeet____test extends SuperDrive {
     double backLeftPower;
     double frontRightPower;
     double backRightPower;
+    boolean rightState = false;
+    boolean rightToggle = false;
+    boolean rightToggleOld = false;
+    boolean leftToggle = false;
+    boolean leftToggleOld = false;
+    boolean overRideToggle = false;
     Super_Sensors_Servos_Motors sss;
 
     @Override
@@ -36,7 +42,7 @@ public class Yeet____test extends SuperDrive {
         }
     }
 
-
+    boolean lastState = false;
     public void mecanumDrive() {
 
 
@@ -66,8 +72,20 @@ public class Yeet____test extends SuperDrive {
             frontRightPower = d - s - r;
             backRightPower = d + s - r;*/
 
+           boolean state = gamepad1.left_trigger > .5;
+           if(state && !lastState) {
+               leftToggle = !leftToggle;
+           }
+           lastState = state;
 
-           if (gamepad1.right_bumper){
+        boolean state2 = gamepad1.right_trigger > .5;
+        if(state && !rightState) {
+            rightToggle = !rightToggle;
+        }
+        rightState = state2;
+
+
+        if(leftToggle){
                leftBack.setPower(backLeftPower / 2);
                leftFront.setPower(frontLeftPower / 2);
                rightBack.setPower(backRightPower / 2);
@@ -75,19 +93,21 @@ public class Yeet____test extends SuperDrive {
            }
 
 
-           else if (gamepad1.left_bumper) {
-               leftBack.setPower(backLeftPower / 2);
-               leftFront.setPower(frontLeftPower / 2);
-               rightBack.setPower(backRightPower / 2);
-               rightFront.setPower(frontRightPower / 2);
+
+           else if (rightToggle) {
+
+            leftBack.setPower(backLeftPower / 3);
+            leftFront.setPower(frontLeftPower / 3);
+            rightBack.setPower(backRightPower / 3);
+            rightFront.setPower(frontRightPower / 3);
+        }
+
+        else {
+               leftBack.setPower(backLeftPower);
+               leftFront.setPower(frontLeftPower);
+               rightBack.setPower(backRightPower);
+               rightFront.setPower(frontRightPower);
            }
-
-
-        else  leftBack.setPower(backLeftPower);
-        leftFront.setPower(frontLeftPower);
-        rightBack.setPower(backRightPower);
-        rightFront.setPower(frontRightPower);
-
 
     }
 
@@ -152,10 +172,10 @@ public class Yeet____test extends SuperDrive {
     }
 
     public void CollectLift (){
-        if (gamepad2.dpad_down)
-            CollectLift.setPower(.85);
-        else if (gamepad2.dpad_up)
+        if (gamepad2.a)
             CollectLift.setPower(-.85);
+        else if (gamepad2.b)
+            CollectLift.setPower(.85);
         else CollectLift.setPower(0);
     }
 

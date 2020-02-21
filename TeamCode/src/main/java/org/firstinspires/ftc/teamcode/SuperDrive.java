@@ -28,6 +28,8 @@ public abstract class SuperDrive extends Super_Sensors_Servos_Motors {
     double backrighttarget = 0;
     double backlefttarget = 0;
 
+    double Skypark;
+
     public static double kP = 0.05;
     public static double kI = 0.0;                              // these will be used in the PID methods
     public static double kD = 0.0;
@@ -394,6 +396,7 @@ public void DriveOff(){
             powerDriveTrain(turn, -turn);
         }
     }
+
 
 
 }

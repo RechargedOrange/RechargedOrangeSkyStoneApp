@@ -41,19 +41,25 @@ public class AutoRedFound extends SuperDrive {
 
 
     PID_driveBackwardEncoders(100,1,0);
-        driveleft(1300, .65);
+        driveleft(1200, .65);
        //pidTurn(0);
         sleep(2000);
-        PID_driveBackwardEncoders(1570, .3,0);
+        PID_driveBackwardEncoders(1300, .3,0);
             FoundLeft.setPosition(.4); FoundRight.setPosition(0);
         sleep(2000);
         PID_driveForwardEncoders(1400, .3,0);
         sleep(2000);
-               pidTurn(90);
+               pidTurn(-90);
+               PID_driveBackwardEncoders(1300,.7,-90);
               FoundLeft.setPosition(0);
               FoundRight.setPosition(.4);
         CollectBack.setPosition(.35);
-        PID_driveForwardEncoders(1000,1,90);
+        sleep(1000);
+        PID_driveForwardEncoders(1200,.3,-90);
+        driveleft(500,.7);
+        if(state == RIGHT_STATE){
+            driveright(1000,.5);
+        }
         //--------------------------------------------------------------
         /*CollectLeft.setPower(-1);
         CollectRight.setPower(1);
@@ -64,7 +70,7 @@ public class AutoRedFound extends SuperDrive {
         PID_driveBackwardEncoders(700,.3,90);
         pidTurn(0);
         PID_driveForwardEncoders(1500,.3,0);
-        PID_driveBackwardEncoders(100,.2,0);
+        PID_driveBackwardEncoders(100,.2,0)4
         sleep(300000);*/
 
     }

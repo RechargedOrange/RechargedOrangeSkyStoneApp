@@ -28,6 +28,11 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
     public Servo FoundLeft;
     public Servo CapMec;
 
+    public DcMotor leftBack;
+    public DcMotor leftFront;
+    public DcMotor rightFront;
+    public DcMotor rightBack;
+
     public DcMotor Lift;
     public DcMotor CollectLift;
 
@@ -35,7 +40,13 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
     DigitalChannel UpTouch;
 
     double postDeployWait;
+    double Skypark;
     boolean lastButtonState = false;
+
+    double frontlefttarget = 0;
+    double frontrighttarget = 0;
+    double backrighttarget = 0;
+    double backlefttarget = 0;
     Orientation lastAngles = new Orientation();
     double globalAngle, turnPower = .30, correction;
     public ElapsedTime waitTimer = new ElapsedTime();
@@ -105,6 +116,7 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
     public void initUpTouch(){
         UpTouch = hardwareMap.get(DigitalChannel.class, "UpTouch");
 
+        sleep(100);
         // set the digital channel to input.
         UpTouch.setMode(DigitalChannel.Mode.INPUT);
 
@@ -114,7 +126,89 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
     //________________________________Scan 4 Skystones stuff_____________________________
 
 
+    public void driveleft(double distance, double power) {
+        leftFront.setPower(-power);
+        leftBack.setPower(power);
+        rightFront.setPower(power);
+        rightBack.setPower(-power);
 
+        backlefttarget = (leftBack.getCurrentPosition() + distance);
+        backrighttarget = (rightBack.getCurrentPosition() - distance);
+        frontlefttarget = (leftFront.getCurrentPosition() - distance);
+        frontrighttarget = (rightFront.getCurrentPosition() + distance);
+
+        while (/*leftFront.getCurrentPosition() > frontlefttarget
+               &&*/ leftBack.getCurrentPosition() < backlefttarget
+               /* && rightFront.getCurrentPosition() < frontrighttarget
+                && rightBack.getCurrentPosition() > backrighttarget*/ && opModeIsActive()) {
+
+            telemetry.addData("left back", leftBack.getCurrentPosition());
+            telemetry.addData("left front", leftFront.getCurrentPosition());
+            telemetry.addData("right back", rightBack.getCurrentPosition());
+            telemetry.addData("right front", rightFront.getCurrentPosition());
+
+            telemetry.update();
+
+        }
+        leftBack.setPower(0);
+        leftFront.setPower(0);
+        rightBack.setPower(0);
+        rightFront.setPower(0);
+    }
+
+    public void driveright(double distance, double power) {
+        leftFront.setPower(power);
+        leftBack.setPower(-power);
+        rightFront.setPower(-power);
+        rightBack.setPower(power);
+
+        backlefttarget = (leftBack.getCurrentPosition() - distance);
+        backrighttarget = (rightBack.getCurrentPosition() + distance);
+        frontlefttarget = (leftFront.getCurrentPosition() + distance);
+        frontrighttarget = (rightFront.getCurrentPosition() - distance);
+
+        while (//leftFront.getCurrentPosition() < frontlefttarget
+            /*&&*/ leftBack.getCurrentPosition() > backlefttarget
+                /* && rightFront.getCurrentPosition() > frontrighttarget
+                 *//*&&*//* rightBack.getCurrentPosition() < backrighttarget*/ && opModeIsActive()) {
+
+            telemetry.addData("left back", leftBack.getCurrentPosition());
+            telemetry.addData("left front", leftFront.getCurrentPosition());
+            telemetry.addData("right back", rightBack.getCurrentPosition());
+            telemetry.addData("right front", rightFront.getCurrentPosition());
+
+
+
+            telemetry.update();
+        }
+        leftBack.setPower(0);
+        leftFront.setPower(0);
+        rightBack.setPower(0);
+        rightFront.setPower(0);
+    }
+
+
+    final int RIGHT_STATE = 0;
+    final int LEFT_STATE = 1;
+    final int NEITHER_STATE = 2;
+    int state = NEITHER_STATE;
+
+    public void Skypark () {
+        telemetry.addData("Button pressed is", lastButtonState);
+        telemetry.addLine("Press A to Skypark Blue");
+        telemetry.addLine("Press B to Skypark Red");
+
+        boolean a = gamepad1.a;
+        boolean b = gamepad1.b;
+
+        if(a)
+            state = RIGHT_STATE;
+        if(b)
+            state = LEFT_STATE;
+
+        telemetry.update();
+
+    }
 
 
 
@@ -158,8 +252,9 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
         while(!(isStarted() || isStopRequested())){
 
             waitTime();
+            Skypark();
 
-           // telemetry.addLine("ready to go!");
+            telemetry.addLine("ready to go!");
             telemetry.update();
         }
     }
