@@ -28,11 +28,6 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
     public Servo FoundLeft;
     public Servo CapMec;
 
-    public DcMotor leftBack;
-    public DcMotor leftFront;
-    public DcMotor rightFront;
-    public DcMotor rightBack;
-
     public DcMotor Lift;
     public DcMotor CollectLift;
 
@@ -68,20 +63,14 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
         initCapMec();
     }
 
-    //                                      Servos
+    //____________________________________Servos___________________________________________________
 
 
-    public void initCollectRight(){
-        CollectRight = hardwareMap.crservo.get("CollectRight");
-    }
+    public void initCollectRight(){ CollectRight = hardwareMap.crservo.get("CollectRight"); }
 
-    public void initCollectLeft (){
-        CollectLeft = hardwareMap.crservo.get("CollectLeft");
-    }
+    public void initCollectLeft (){ CollectLeft = hardwareMap.crservo.get("CollectLeft"); }
 
-    public void initCollectBack (){
-        CollectBack = hardwareMap.servo.get("CollectBack");
-    }
+    public void initCollectBack (){ CollectBack = hardwareMap.servo.get("CollectBack");}
 
     public void initFoundRight () {FoundRight = hardwareMap.servo.get("FoundRight");}
 
@@ -126,77 +115,12 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
     //________________________________Scan 4 Skystones stuff_____________________________
 
 
-    public void driveleft(double distance, double power) {
-        leftFront.setPower(-power);
-        leftBack.setPower(power);
-        rightFront.setPower(power);
-        rightBack.setPower(-power);
-
-        backlefttarget = (leftBack.getCurrentPosition() + distance);
-        backrighttarget = (rightBack.getCurrentPosition() - distance);
-        frontlefttarget = (leftFront.getCurrentPosition() - distance);
-        frontrighttarget = (rightFront.getCurrentPosition() + distance);
-
-        while (/*leftFront.getCurrentPosition() > frontlefttarget
-               &&*/ leftBack.getCurrentPosition() < backlefttarget
-               /* && rightFront.getCurrentPosition() < frontrighttarget
-                && rightBack.getCurrentPosition() > backrighttarget*/ && opModeIsActive()) {
-
-            telemetry.addData("left back", leftBack.getCurrentPosition());
-            telemetry.addData("left front", leftFront.getCurrentPosition());
-            telemetry.addData("right back", rightBack.getCurrentPosition());
-            telemetry.addData("right front", rightFront.getCurrentPosition());
-
-            telemetry.update();
-
-        }
-        leftBack.setPower(0);
-        leftFront.setPower(0);
-        rightBack.setPower(0);
-        rightFront.setPower(0);
-    }
-
-    public void driveright(double distance, double power) {
-        leftFront.setPower(power);
-        leftBack.setPower(-power);
-        rightFront.setPower(-power);
-        rightBack.setPower(power);
-
-        backlefttarget = (leftBack.getCurrentPosition() - distance);
-        backrighttarget = (rightBack.getCurrentPosition() + distance);
-        frontlefttarget = (leftFront.getCurrentPosition() + distance);
-        frontrighttarget = (rightFront.getCurrentPosition() - distance);
-
-        while (//leftFront.getCurrentPosition() < frontlefttarget
-            /*&&*/ leftBack.getCurrentPosition() > backlefttarget
-                /* && rightFront.getCurrentPosition() > frontrighttarget
-                 *//*&&*//* rightBack.getCurrentPosition() < backrighttarget*/ && opModeIsActive()) {
-
-            telemetry.addData("left back", leftBack.getCurrentPosition());
-            telemetry.addData("left front", leftFront.getCurrentPosition());
-            telemetry.addData("right back", rightBack.getCurrentPosition());
-            telemetry.addData("right front", rightFront.getCurrentPosition());
-
-
-
-            telemetry.update();
-        }
-        leftBack.setPower(0);
-        leftFront.setPower(0);
-        rightBack.setPower(0);
-        rightFront.setPower(0);
-    }
-
-
     final int RIGHT_STATE = 0;
     final int LEFT_STATE = 1;
     final int NEITHER_STATE = 2;
     int state = NEITHER_STATE;
 
     public void Skypark () {
-        telemetry.addData("Button pressed is", lastButtonState);
-        telemetry.addLine("Press A to Skypark Blue");
-        telemetry.addLine("Press B to Skypark Red");
 
         boolean a = gamepad1.a;
         boolean b = gamepad1.b;
@@ -205,20 +129,15 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
             state = RIGHT_STATE;
         if(b)
             state = LEFT_STATE;
-
         telemetry.update();
 
     }
 
 
 
-
     public void waitTime() {
-        telemetry.addData("Wait time seconds", postDeployWait);
-        telemetry.addLine("x to increment 1.0 seconds");
-        telemetry.addLine("y to decrement 1.0 seconds");
-        telemetry.addLine("lb to increment 0.1 seconds");
-        telemetry.addLine("rb to decrement 0.1 seconds");
+
+
 
         boolean x = gamepad1.x;
         boolean y = gamepad1.y;
@@ -254,8 +173,28 @@ public abstract class Super_Sensors_Servos_Motors extends LinearOpMode {
             waitTime();
             Skypark();
 
-            telemetry.addLine("ready to go!");
+            telemetry.addLine("10 pc chicken nuggets and peperoni pizza and seasoned fries and a large Dr. Pepper :<)");
+
+            telemetry.addData("Button pressed is", state);
+
+            telemetry.addLine("Press A to Skypark Red");
+            telemetry.addLine("Press B to Skypark Blue");
+
+            telemetry.addLine("1 = Blue");
+            telemetry.addLine("0 = Red");
+
+
+            telemetry.addData("Wait time seconds", postDeployWait);
+            telemetry.addLine("x to increment 1.0 seconds");
+            telemetry.addLine("y to decrement 1.0 seconds");
+            telemetry.addLine("lb to increment 0.1 seconds");
+            telemetry.addLine("rb to decrement 0.1 seconds");
+
+            telemetry.addLine("I don't know what to put here");
+
+
             telemetry.update();
+
         }
     }
 
